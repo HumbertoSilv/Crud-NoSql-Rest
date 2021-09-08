@@ -1,0 +1,6 @@
+class IncorrectDataError(Exception):
+    ...
+
+
+class NotFoundId(Exception):
+    ...

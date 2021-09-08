@@ -31,7 +31,7 @@ def init_app(app: Flask):
         try:
             post = Post.post_by_id(id)
         except NotFoundId:
-            return {"msg": f"Not Found Posts By ID: {id}"}, 400
+            return {"msg": f"Not Found Posts By ID: {id}"}, 404
 
         return jsonify(post), 200
 

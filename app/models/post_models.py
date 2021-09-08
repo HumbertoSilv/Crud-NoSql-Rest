@@ -63,19 +63,19 @@ class Post:
         post = db.post.find_one({"id": id})
         list_update = list(update.keys())
 
+        if not post:
+            raise NotFoundId
+
         for key in list_update:
             resp = post.get(key)
             if not resp:
                 raise IncorrectDataError
 
         update["update_at"] = {"data": datetime.datetime.utcnow()}
-        success_update = db.post.find_one_and_update({"id": id}, {"$set": update})
+        db.post.find_one_and_update({"id": id}, {"$set": update})
         post_update = db.post.find_one({"id": id})
-
-        if not success_update:
-            raise NotFoundId
-
         del post_update["_id"]
+
         return post_update
 
     @staticmethod

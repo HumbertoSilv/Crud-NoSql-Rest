@@ -1,9 +1,9 @@
-from bson.objectid import ObjectId
-from pymongo import MongoClient
-from dotenv import load_dotenv
-import os
 import datetime
+import os
+
 from app.exceptions.post_exceptions import IncorrectDataError, NotFoundId
+from dotenv import load_dotenv
+from pymongo import MongoClient
 
 load_dotenv()
 
@@ -13,7 +13,9 @@ db = client.kenzie
 
 
 class Post:
-    def __init__(self, title: str, author: str, tags: list, content: str) -> None:
+    def __init__(
+            self, title: str, author: str, tags: list, content: str
+            ) -> None:
         self.id = db.post.count_documents({}) + 1
         self.created_at = {"data": datetime.datetime.utcnow()}
         self.update_at = {"data": datetime.datetime.utcnow()}
@@ -45,7 +47,6 @@ class Post:
                 "name": post["title"],
                 "link": f"http://localhost:5000/posts/{post['id']}"
             })
-
         return links
 
     @staticmethod
